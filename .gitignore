@@ -9,3 +9,15 @@
 /.idea/
 
 /docker/database/.env
+
+/phpunit.xml
+.phpunit.result.cache
+
+/.phpcs-cache
+/phpcs.xml
+
+.phpunit.result.cache
+/phpunit.xml
+
+/bin/*
+!bin/console
