@@ -6,6 +6,7 @@ namespace App\Tests\Entity;
 
 use App\Entity\User;
 use App\Tests\PropertyAccessTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
@@ -41,5 +42,8 @@ final class UserTest extends TestCase
         $this->assertEquals([User::DEFAULT_USER_ROLE], $subject->getRoles());
         $this->assertInstanceOf(\DateTimeImmutable::class, $subject->getCreatedAt());
         $this->assertNull($subject->getUpdatedAt());
+        $this->assertInstanceOf(ArrayCollection::class, $subject->getTokens());
+        $this->assertInstanceOf(ArrayCollection::class, $subject->getPrograms());
+        $this->assertInstanceOf(ArrayCollection::class, $subject->getEnrollments());
     }
 }

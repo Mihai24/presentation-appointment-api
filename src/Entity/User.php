@@ -72,6 +72,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Token::class)]
     protected Collection $tokens;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Presentation::class)]
+    protected Collection $programs;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Enrollment::class)]
+    protected Collection $enrollments;
+
     public function __construct(
         string $email,
         string $firstName,
@@ -85,6 +91,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->phone = $phone;
         $this->password = $password;
         $this->tokens = new ArrayCollection();
+        $this->programs = new ArrayCollection();
+        $this->enrollments = new ArrayCollection();
     }
 
     public function getId(): Uuid
@@ -155,5 +163,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setHashedPassword(User $user, UserPasswordHasherInterface $userPasswordHasher): void
     {
         $this->password = $userPasswordHasher->hashPassword($user, $user->getPassword());;
+    }
+
+    public function getPrograms(): Collection
+    {
+        return $this->programs;
+    }
+
+    public function getEnrollments(): Collection
+    {
+        return $this->enrollments;
     }
 }
