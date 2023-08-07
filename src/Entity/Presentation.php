@@ -23,41 +23,43 @@ class Presentation
     #[ORM\Column(type: 'uuid', unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
-    #[Groups(['presentation:read'])]
+    #[Groups(['presentation:read', 'presentation:create'])]
     protected Uuid $id;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: false)]
     #[Assert\NotBlank(allowNull: false)]
     #[Assert\Length(min: 3, max: 255)]
-    #[Groups(['presentation:read'])]
+    #[Groups(['presentation:read', 'presentation:create'])]
     protected string $name;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Assert\NotBlank(allowNull: false)]
     #[Assert\Length(min: 5, max: 1000)]
-    #[Groups(['presentation:read'])]
+    #[Groups(['presentation:read', 'presentation:create'])]
     protected string $description;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     #[Assert\NotBlank(allowNull: false)]
-    #[Assert\Date]
-    #[Groups(['presentation:read'])]
+    #[Assert\DateTime]
+    #[Assert\GreaterThan('now')]
+    #[Groups(['presentation:read', 'presentation:create'])]
     protected \DateTimeInterface $startsAt;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     #[Assert\NotBlank(allowNull: false)]
-    #[Assert\Date]
-    #[Groups(['presentation:read'])]
+    #[Assert\DateTime]
+    #[Assert\GreaterThan('this.getStartsAt')]
+    #[Groups(['presentation:read', 'presentation:create'])]
     protected \DateTimeInterface $endsAt;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
-    #[Assert\Date]
-    #[Groups(['presentation:read'])]
+    #[Assert\DateTime]
+    #[Groups(['presentation:read', 'presentation:create'])]
     protected \DateTimeInterface $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Assert\Date]
-    #[Groups(['presentation:read'])]
+    #[Assert\DateTime]
+    #[Groups(['presentation:read', 'presentation:create'])]
     protected ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'programs')]
