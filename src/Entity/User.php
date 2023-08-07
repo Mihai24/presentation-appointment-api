@@ -13,6 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -32,41 +33,50 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'uuid', unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    #[Groups(['user:read'])]
     protected Uuid $id;
 
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
     #[Assert\NotBlank(allowNull: false)]
     #[Assert\Length(min: 3, max: 254)]
+    #[Groups(['user:read'])]
     protected string $firstName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
     #[Assert\NotBlank(allowNull: false)]
     #[Assert\Length(min: 3, max: 254)]
+    #[Groups(['user:read'])]
     protected string $lastName;
 
     #[ORM\Column(type: 'string', length: 255, unique: true, nullable: false)]
     #[Assert\NotBlank(allowNull: false)]
     #[Assert\Email]
+    #[Groups(['user:read'])]
     protected string $email;
 
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
     #[Assert\NotBlank(allowNull: false)]
     #[Assert\Length(min: 4, max: 254)]
+    #[Groups(['user:read'])]
     protected string $password;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Length(min: 10, max: 20)]
     #[Assert\Regex(self::PHONE_NUMBER_VALIDATION_REGEX)]
+    #[Groups(['user:read'])]
     protected ?string $phone = null;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
+    #[Groups(['user:read'])]
     protected \DateTimeInterface $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['user:read'])]
     protected ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(type: 'json')]
     #[Assert\All(new Assert\Choice(choices: [self::DEFAULT_USER_ROLE, self::ADMIN_USER_ROLE]))]
+    #[Groups(['user:read'])]
     protected array $roles = [User::DEFAULT_USER_ROLE];
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Token::class)]

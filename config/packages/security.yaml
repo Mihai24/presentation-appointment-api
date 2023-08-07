@@ -29,6 +29,7 @@ security:
                 token_extractors: 'App\Security\Authenticator\ApiKeyTokenExtractor'
     access_control:
         - { path: ^/api/tokens&, roles: PUBLIC_ACCESS, methods: ['POST'] }
+        - { path: ^/api/presentations, roles: ROLE_USER, methods: ['GET'] }
 
 when@test:
     security:
