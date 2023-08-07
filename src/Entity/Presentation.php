@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -22,37 +23,45 @@ class Presentation
     #[ORM\Column(type: 'uuid', unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
+    #[Groups(['presentation:read'])]
     protected Uuid $id;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: false)]
     #[Assert\NotBlank(allowNull: false)]
     #[Assert\Length(min: 3, max: 255)]
+    #[Groups(['presentation:read'])]
     protected string $name;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     #[Assert\NotBlank(allowNull: false)]
     #[Assert\Length(min: 5, max: 1000)]
+    #[Groups(['presentation:read'])]
     protected string $description;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     #[Assert\NotBlank(allowNull: false)]
     #[Assert\Date]
+    #[Groups(['presentation:read'])]
     protected \DateTimeInterface $startsAt;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     #[Assert\NotBlank(allowNull: false)]
     #[Assert\Date]
+    #[Groups(['presentation:read'])]
     protected \DateTimeInterface $endsAt;
 
     #[ORM\Column(type: 'datetime', nullable: false)]
     #[Assert\Date]
+    #[Groups(['presentation:read'])]
     protected \DateTimeInterface $createdAt;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     #[Assert\Date]
+    #[Groups(['presentation:read'])]
     protected ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'programs')]
+    #[Groups(['user:read'])]
     protected User $organizer;
 
     #[ORM\OneToMany(mappedBy: 'presentation', targetEntity: Enrollment::class)]

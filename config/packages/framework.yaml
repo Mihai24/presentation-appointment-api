@@ -18,6 +18,11 @@ framework:
     php_errors:
         log: true
 
+    serializer:
+        default_context:
+            datetime_format: 'm.d.Y H:i'
+            !php/const Symfony\Component\Serializer\Encoder\JsonEncode::OPTIONS: !php/const JSON_UNESCAPED_SLASHES
+
 when@test:
     framework:
         test: true
