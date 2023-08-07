@@ -7,6 +7,7 @@ namespace App\Tests\Entity;
 use App\Entity\User;
 use App\Tests\PropertyAccessTrait;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Uid\Uuid;
 
 final class UserTest extends TestCase
@@ -16,7 +17,14 @@ final class UserTest extends TestCase
     public function testAccessToObjectProperties(): void
     {
         $uuid = $this->createMock(Uuid::class);
-        $subject = new User('test@gmail.com', 'First', 'Last', '0123456789');
+
+        $subject = new User(
+            'test@gmail.com',
+            'First',
+            'Last',
+            'password',
+            '0123456789'
+        );
 
         $this->setProperty($subject, $uuid, 'id');
 
@@ -29,6 +37,7 @@ final class UserTest extends TestCase
         $this->assertEquals('First', $subject->getFirstName());
         $this->assertEquals('Last', $subject->getLastName());
         $this->assertEquals('0123456789', $subject->getPhone());
+        $this->assertEquals('password', $subject->getPassword());
         $this->assertEquals([User::DEFAULT_USER_ROLE], $subject->getRoles());
         $this->assertInstanceOf(\DateTimeImmutable::class, $subject->getCreatedAt());
         $this->assertNull($subject->getUpdatedAt());

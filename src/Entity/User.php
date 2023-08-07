@@ -10,6 +10,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'users')]
 #[UniqueEntity('email')]
 #[ORM\HasLifecycleCallbacks]
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     final public const DEFAULT_USER_ROLE = 'ROLE_USER';
 
@@ -49,6 +51,7 @@ class User implements UserInterface
 
     #[ORM\Column(type: 'string', length: 255, nullable: false)]
     #[Assert\NotBlank(allowNull: false)]
+    #[Assert\Length(min: 4, max: 254)]
     protected string $password;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -73,12 +76,14 @@ class User implements UserInterface
         string $email,
         string $firstName,
         string $lastName,
-        ?string $phone
+        string $password,
+        ?string $phone = null
     ) {
         $this->email = $email;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->phone = $phone;
+        $this->password = $password;
         $this->tokens = new ArrayCollection();
     }
 
@@ -140,5 +145,15 @@ class User implements UserInterface
     public function onPrePersist(): void
     {
         $this->createdAt = new \DateTimeImmutable();
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setHashedPassword(User $user, UserPasswordHasherInterface $userPasswordHasher): void
+    {
+        $this->password = $userPasswordHasher->hashPassword($user, $user->getPassword());;
     }
 }
