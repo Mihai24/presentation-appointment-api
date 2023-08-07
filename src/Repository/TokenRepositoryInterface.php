@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-interface TokenRepositoryInterface
+use Doctrine\Persistence\ObjectRepository;
+
+interface TokenRepositoryInterface extends ObjectRepository
 {
 }
