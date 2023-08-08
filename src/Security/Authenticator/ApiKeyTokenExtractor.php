@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Security\Authenticator;
 
+use App\Exception\Security\InvalidAccessTokenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\AccessToken\AccessTokenExtractorInterface;
@@ -17,7 +18,7 @@ class ApiKeyTokenExtractor implements AccessTokenExtractorInterface
         $token = $request->headers->get(self::HEADER_TOKEN_KEY);
 
         if (null === $token) {
-            throw new AccessDeniedException();
+            throw new InvalidAccessTokenException();
         }
 
         return $token;

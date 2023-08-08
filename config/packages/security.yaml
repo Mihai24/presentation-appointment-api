@@ -25,8 +25,9 @@ security:
             stateless: true
             provider: app_provider
             access_token:
-                token_handler: 'App\Security\Authenticator\AccessTokenHandler'
-                token_extractors: 'App\Security\Authenticator\ApiKeyTokenExtractor'
+                token_handler: App\Security\Authenticator\AccessTokenHandler
+                token_extractors: App\Security\Authenticator\ApiKeyTokenExtractor
+                failure_handler: App\Security\Authenticator\AuthenticationFailureHandler
     access_control:
         - { path: ^/api/tokens&, roles: PUBLIC_ACCESS, methods: ['POST'] }
         - { path: ^/api/presentations, roles: ROLE_USER, methods: ['GET', 'POST'] }

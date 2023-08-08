@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Security\Authenticator;
 
+use App\Exception\Security\InvalidAccessTokenException;
 use App\Security\Authenticator\ApiKeyTokenExtractor;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 final class ApiKeyTokenExtractorTest extends TestCase
 {
@@ -25,7 +25,7 @@ final class ApiKeyTokenExtractorTest extends TestCase
 
     public function testExtractAccessTokenWithNull(): void
     {
-        $this->expectException(AccessDeniedException::class);
+        $this->expectException(InvalidAccessTokenException::class);
 
         $request = $this->createMock(Request::class);
         $request->headers = new HeaderBag();

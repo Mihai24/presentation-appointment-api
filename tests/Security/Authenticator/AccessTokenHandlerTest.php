@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Tests\Security\Authenticator;
 
 use App\Entity\Token;
+use App\Exception\Security\InvalidAccessTokenException;
 use App\Repository\TokenRepositoryInterface;
 use App\Security\Authenticator\AccessTokenHandler;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
@@ -47,7 +47,7 @@ final class AccessTokenHandlerTest extends TestCase
 
     public function testGetUserBadgeWithNullToken(): void
     {
-        $this->expectException(AuthenticationException::class);
+        $this->expectException(InvalidAccessTokenException::class);
 
         $this->tokenRepository->expects($this->once())
             ->method('findOneBy')
