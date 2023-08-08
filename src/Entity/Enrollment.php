@@ -26,7 +26,7 @@ class Enrollment
     protected Uuid $id;
 
     #[ORM\ManyToOne(targetEntity: Presentation::class, inversedBy: 'enrollments')]
-    #[Groups(['presentation:read', 'enrollments:read'])]
+    #[Groups(['presentation:read'])]
     protected Presentation $presentation;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'enrollments')]
