@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\EventListener;
 
-use App\EventListener\ExceptionListener;
+use App\EventListener\Exception\ExceptionListener;
 use App\Exception\ExceptionFactoryInterface;
 use App\Exception\General\GeneralException;
 use App\Exception\Response\ErrorResponse;
