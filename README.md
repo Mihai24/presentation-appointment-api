@@ -78,7 +78,7 @@ Enrollment endpoints
 
 Presentation endpoints
 
-`POST /api/presentation` `POST /api/users` with the following JSON Body
+`POST /api/presentation` with the following JSON Body
     {
         "name": "presentation",
         "description": "description",
