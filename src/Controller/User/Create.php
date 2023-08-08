@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[AsController]
-class Create
+final class Create
 {
     use ViolationListHandlerTrait;
 
