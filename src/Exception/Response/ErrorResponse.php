@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Exception\Response;
 
 use App\Exception\AbstractException;
+use App\Exception\ValidationListContextExceptionInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ErrorResponse extends JsonResponse
@@ -18,6 +19,13 @@ class ErrorResponse extends JsonResponse
             ],
             'context' => []
         ];
+
+        if (
+            $abstractException instanceof ValidationListContextExceptionInterface
+            && \count($abstractException->getErrorList()) > 0
+        ) {
+            $body['context']['invalidInputs'] = $abstractException->getErrorList();
+        }
 
         parent::__construct(
             $body,

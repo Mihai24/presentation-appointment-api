@@ -29,7 +29,7 @@ class ExceptionFactory implements ExceptionFactoryInterface
             AccessDeniedHttpException::class, AccessDeniedExceptionCore::class  => new AccessDeniedException(),
             NotFoundHttpException::class => new NotFoundException(),
             BadRequestHttpException::class, UnexpectedTypeException::class => new BadRequestException(),
-            default => new GeneralException(),
+            default => new GeneralException()
         };
     }
 }

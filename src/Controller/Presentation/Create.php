@@ -7,6 +7,7 @@ namespace App\Controller\Presentation;
 use App\Entity\User;
 use App\Presentation\DataTransfer\PresentationDto;
 use App\Presentation\Factory\PresentationFactoryInterface;
+use App\Validator\ViolationListHandlerTrait;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 #[AsController]
 final class Create
 {
+    use ViolationListHandlerTrait;
+
     #[Route('/api/presentations', name: 'app_presentations_create', methods: ['POST'])]
     public function __invoke(
         PresentationDto $presentationDto,
@@ -32,7 +35,7 @@ final class Create
 
         $violationList = $validator->validate($presentationDto);
 
-        //todo add a violationHandler to return all errors
+        $this->handleViolationList($violationList);
 
         $presentation = $presentationFactory->createFromDto($presentationDto);
 
