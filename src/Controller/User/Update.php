@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[AsController]
-class Update
+final class Update
 {
     use ViolationListHandlerTrait;
 

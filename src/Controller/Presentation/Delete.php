@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Controller\User;
+declare(strict_types=1);
 
-use App\Entity\User;
+namespace App\Controller\Presentation;
+
+use App\Entity\Presentation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,11 +15,11 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[AsController]
 final class Delete
 {
-    #[Route('/api/users/{id}', name: 'app_users_delete', methods: ['DELETE'])]
-    #[IsGranted('delete-user', 'user')]
-    public function __invoke(User $user, EntityManagerInterface $entityManager): JsonResponse
+    #[Route('/api/presentations/{id}', name: 'app_presentations_delete', methods: ['DELETE'])]
+    #[IsGranted('presentation_delete', 'presentation')]
+    public function __invoke(Presentation $presentation, EntityManagerInterface $entityManager): JsonResponse
     {
-        $user->delete();
+        $presentation->delete();
         $entityManager->flush();
 
         return new JsonResponse(null, Response::HTTP_ACCEPTED, [], true);

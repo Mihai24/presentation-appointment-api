@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 #[AsController]
-class GetOne
+final class GetOne
 {
     #[Route('/api/users/{id}', name: 'app_users_get_one', methods: ['GET'])]
     public function __invoke(User $user, SerializerInterface $serializer): JsonResponse
