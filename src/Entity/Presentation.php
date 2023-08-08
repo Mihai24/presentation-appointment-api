@@ -19,11 +19,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 class Presentation
 {
+    use SoftDeleteTrait;
+
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
-    #[Groups(['presentation:read', 'presentation:create'])]
+    #[Groups(['presentation:read', 'presentation:create', 'user:read', 'enrollment:read'])]
     protected Uuid $id;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: false)]
@@ -62,7 +64,7 @@ class Presentation
     #[Groups(['presentation:read', 'presentation:create'])]
     protected ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'programs')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'presentation')]
     #[Groups(['user:read'])]
     protected User $organizer;
 

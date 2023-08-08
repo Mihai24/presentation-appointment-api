@@ -43,7 +43,7 @@ final class UserTest extends TestCase
         $this->assertInstanceOf(\DateTimeImmutable::class, $subject->getCreatedAt());
         $this->assertNull($subject->getUpdatedAt());
         $this->assertInstanceOf(ArrayCollection::class, $subject->getTokens());
-        $this->assertInstanceOf(ArrayCollection::class, $subject->getPrograms());
+        $this->assertInstanceOf(ArrayCollection::class, $subject->getPresentations());
         $this->assertInstanceOf(ArrayCollection::class, $subject->getEnrollments());
     }
 }

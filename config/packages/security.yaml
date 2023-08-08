@@ -31,6 +31,8 @@ security:
     access_control:
         - { path: ^/api/tokens&, roles: PUBLIC_ACCESS, methods: ['POST'] }
         - { path: ^/api/presentations, roles: ROLE_USER, methods: ['GET', 'POST'] }
+        - { path: ^/api/users, roles: PUBLIC_ACCESS, methods: ['POST'] }
+        - { path: ^/api/users, roles: ROLE_USER, methods: ['GET', 'PUT', 'DELETE'] }
 
 when@test:
     security:
